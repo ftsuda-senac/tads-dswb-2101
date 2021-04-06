@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplo formulario REST</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Exemplo formulario REST</div>
+        <script>
+        const xhr = new XMLHttpRequest();
+	xhr.open('POST', 'formulario-rest', true);
+        xhr.setRequestHeader('content-type', 'application/json')
+        xhr.addEventListener('load', function() {
+            alert(xhr.responseText)
+        })
+        xhr.send(JSON.stringify({
+            nome: 'Fulano da Silva',
+            email: 'fulano@teste.com.br',
+            senha: 'abcd1234',
+            repetirSenha: 'abcd1234',
+            genero: 1,
+            interesses: ['Gastronomia', 'ZPTO']
+        }))
+        </script>
+    </body>
+</html>
