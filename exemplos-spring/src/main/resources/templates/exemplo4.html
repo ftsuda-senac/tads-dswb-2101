@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplos Spring MVC</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="estilos.css" />
+    </head>
+    <body>
+        <div>
+            <h1>Spring MVC - Exemplo 4</h1>
+            <ul>
+                <li th:each="p : ${lista}">
+                    <h3>Nome: <span th:text="${p.nome}">XXXXXXX</span></h3>
+                    <p>Data de nascimento: <span th:text="${p.dataNascimento}">yyyy-MM-dd</span> <span class="aviso-menor-idade" th:if="${p.menorIdade}">MENOR 18</span></p>
+                    <p>Número: <span th:text="${p.numero}">00</span></p>
+                    <ul>
+                        <li th:each="t : ${p.telefones}" th:if="${p.telefones != null}">
+                            <span th:text="${t}"></span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

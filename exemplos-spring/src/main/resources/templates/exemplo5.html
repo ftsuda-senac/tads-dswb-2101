@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Exemplos Spring MVC</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+            <h1>Spring MVC - Exemplo 5</h1>
+            <p>Nome: <span th:text="${dados.nome}">xxxxxxxx</span></p>
+            <p>Data nascimento:
+                <span th:text="${dados.dataNascimento}" th:if="${dados.dataNascimento != null}">yyyy-MM-dd</span>
+                <span th:unless="${dados.dataNascimento != null}">NÃO INFORMADO</span></p>
+            <p>Número: <span data-th-text="${dados.numero}">00</span></p> 
+        </div>
+    </body>
+</html>
