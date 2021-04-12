@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -31,6 +32,20 @@ public class FormularioController {
         ModelAndView mv = new ModelAndView("resultado");
         mv.addObject("dados", dados);
         return mv;
+    }
+  
+    @PostMapping("/post-redirect-get")
+    public ModelAndView receberDadosPostRedirectGet(
+            @ModelAttribute Dados dados,
+            RedirectAttributes redirAttr) {
+        ModelAndView mv = new ModelAndView("redirect:/formulario/resultado-post-redirect-get");
+        redirAttr.addFlashAttribute("dados", dados);
+        return mv;
+    }
+
+    @GetMapping("/resultado-post-redirect-get")
+    public ModelAndView mostrarResultadosPostRedirectGet() {
+        return new ModelAndView("resultado");
     }
     
 }
