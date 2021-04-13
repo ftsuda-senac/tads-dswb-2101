@@ -5,6 +5,9 @@
  */
 package br.senac.tads.dsw.exemplosspring;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Arrays;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +27,26 @@ public class FormularioController {
     @GetMapping
     public ModelAndView mostrarForm() {
         ModelAndView mv = new ModelAndView("formulario");
+        mv.addObject("dados", new Dados());
+        return mv;
+    }
+    
+    @GetMapping("/preenchido")
+    public ModelAndView mostrarFormPreenchido() {
+        Dados dados = new Dados();
+        dados.setId(123);
+        dados.setNome("Chico de Souza");
+        dados.setEmail("chico@teste.com.br");
+        dados.setTelefone("(11) 98777-1222");
+        dados.setDescricao("Biografia do Chico de Souza");
+        dados.setNumero(76);
+        dados.setPeso(new BigDecimal("98.7"));
+        dados.setAltura(new BigDecimal("1.86"));
+        dados.setDataNascimento(LocalDate.parse("1997-05-23"));
+        dados.setGenero(1);
+        dados.setInteresses(Arrays.asList("Esportes", "Viagens"));
+        ModelAndView mv = new ModelAndView("formulario");
+        mv.addObject("dados", dados);
         return mv;
     }
     
