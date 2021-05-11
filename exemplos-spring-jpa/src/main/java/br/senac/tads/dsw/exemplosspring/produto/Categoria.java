@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -28,7 +29,7 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotEmpty
+    @NotBlank
     @Size(min = 1, max = 100)
     @Column(unique = true)
     private String nome;

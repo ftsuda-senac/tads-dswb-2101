@@ -6,6 +6,7 @@
 package br.senac.tads.dsw.exemplosspring.produto;
 
 import java.util.List;
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -25,22 +26,43 @@ public class ProdutoRepositoryJpaImpl implements ProdutoRepository {
 
     @Override
     public List<Produto> findAll(int offset, int quantidade) {
-        TypedQuery<Produto> jpqlQuery
-                = em.createQuery("SELECT p FROM Produto p", Produto.class);
+//        TypedQuery<Produto> jpqlQuery
+//                = em.createQuery("SELECT p FROM Produto p", Produto.class);
+        TypedQuery<Produto> jpqlQuery = em.createNamedQuery("Produto.findAll", Produto.class);
+        jpqlQuery.setFirstResult(offset);
+        jpqlQuery.setMaxResults(quantidade);
         return jpqlQuery.getResultList();
     }
 
     @Override
     public List<Produto> findByCategoria(List<Integer> idsCat, int offset, int quantidade) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Produto> jpqlQuery = em.createNamedQuery("Produto.findAllByCategoriasId", Produto.class);
+        jpqlQuery.setParameter("idsCat", idsCat);
+        jpqlQuery.setFirstResult(offset);
+        jpqlQuery.setMaxResults(quantidade);
+        return jpqlQuery.getResultList();
     }
 
-    @Override
+    @Override // SÓ FUNCIONA COM open-in-view=true no application.properties
     public Produto findById(Long id) {
         TypedQuery<Produto> jpqlQuery = em.createQuery("SELECT p FROM Produto p WHERE p.id = :idProd", Produto.class);
         jpqlQuery.setParameter("idProd", id);
         Produto p = jpqlQuery.getSingleResult();
         return p;
+    }
+
+    public Produto findByIdComFetch(Long id) {
+        TypedQuery<Produto> jpqlQuery = em.createNamedQuery("Produto.findByIdComFetch", Produto.class);
+        jpqlQuery.setParameter("idProd", id);
+        return jpqlQuery.getSingleResult();
+    }
+    
+    public Produto findByIdComNamedEntityGraph(Long id) { // ComNamedEntityGraph
+        EntityGraph<?> namedEntityGraph = em.getEntityGraph("graph.ProdutoCategoriasImagens");
+        TypedQuery<Produto> jpqlQuery = em.createQuery("SELECT p FROM Produto p WHERE p.id = :idProd", Produto.class);
+        jpqlQuery.setParameter("idProd", id);
+        jpqlQuery.setHint("javax.persistence.loadgraph", namedEntityGraph);
+        return jpqlQuery.getSingleResult();
     }
 
     @Transactional
